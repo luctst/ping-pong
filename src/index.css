@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'Degular-Light';
+  src: local('Degular-Light'), url(./font/Degular-Light.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Degular-Medium';
+  src: local('Degular-Medium'), url(./font/Degular-Medium.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Degular-Semibold';
+  src: local('Degular-Semibold'), url(./font/Degular-Semibold.otf) format('woff');
+}
+
+.loader {
+  margin: 0 0 2em;
+  height: 100px;
+  width: 100%;
+  text-align: center;
+  padding: 1em;
+  display: inline-block;
+  vertical-align: top;
+}
