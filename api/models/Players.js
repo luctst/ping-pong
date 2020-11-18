@@ -6,7 +6,8 @@ module.exports = mongoose.model(
         name: {
             type: String,
             required: true,
-            unique: true
+            unique: true,
+            enum: ['antoine', 'thomas', 'léo', 'lucas']
         },
         gamesPlayed: {
             type: Number,
