@@ -2,16 +2,16 @@ import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import Header from './components/Header';
+// import Header from './components/Header';
 import Home from './views/Home';
 import reportWebVitals from './reportWebVitals';
 
-document.body.style = 'margin:0;padding:0;';
+document.body.style = 'margin:0;padding:0;background-color:#115493';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Header />
+      {/* <Header /> */}
       <Switch>
         <Route exact strict to="/" component={Home} />
       </Switch>
