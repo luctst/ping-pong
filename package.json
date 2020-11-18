@@ -26,6 +26,7 @@
     "eject": "react-scripts eject",
     "style": "prettier -c './api/**/*'",
     "style:fix": "prettier --c --write './api/**/*'",
+    "style:front": "prettier --c --write './src/**/*'",
     "back": "nodemon api/index.js"
   },
   "eslintConfig": {
