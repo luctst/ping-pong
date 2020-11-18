@@ -11,6 +11,8 @@
 module.exports = (response, code, data = {}) => {
     let error;
     const defaultHeader = {
+        'Access-Control-Allow-Origin': process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : '',
+        'Access-Control-Allow-Credentials': true,
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
         'Access-Control-Allow-Headers':
             'Authorization ,ETag, Link, Location, Retry-After, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, x-api-key, Content-Type',
@@ -91,7 +93,11 @@ module.exports = (response, code, data = {}) => {
     });
 
     if (data.modifyResponse) {
-        httpCode[code] = { ...data.modifyResponse };
+        if (Array.isArray(data.modifyResponse)) {
+            httpCode[code] = [ ...data.modifyResponse ]
+        } else {
+            httpCode[code] = { ...data.modifyResponse };
+        }
     }
 
     if (data.token) {
