@@ -21,7 +21,7 @@ export default function Home() {
         {data.map(function (playerData, index) {
           return (
             <section
-              className={`col-sm-12 ${index ? "border-left" : ""}`}
+              className={'col-sm-12'}
               key={index}
             >
               <header>
