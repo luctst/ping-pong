@@ -1,0 +1,67 @@
+service: pingpong-front
+
+plugins:
+  - serverless-s3-remover
+  - serverless-s3-sync
+  - serverless-certificate-creator
+
+custom:
+  region: ${opt:region, 'eu-east-1'}
+  bucketName: pingpong
+  s3Sync:
+    - bucketName: ${self:custom.bucketName}
+      localDir: build
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ${self:custom.region}
+  profile: aws-perso-cli
+
+package:
+  exclude:
+    - 'node_modules/**'
+    - 'build/**'
+    - 'public/**'
+
+ressources:
+  Ressources:
+    BucketAccessLogs:
+      Type: 'AWS::S3::Bucket'
+      Properties:
+        BucketName: ${self:custom.bucketName}-accesslogs
+        AccessControl: LogDeliveryWrite
+    PingPongApp:
+      Type: 'AWS::S3::Bucket'
+      Properties:
+        BucketName: ${self:custom.bucketName}
+        WebsiteConfiguration:
+          ErrorDocument: "error.html"
+          IndexDocument: "index.html"
+        LoggingConfiguration:
+          DestinationBucketName:
+            Ref: BucketAccessLogs
+    S3AccessPolicy:
+      Type: AWS::S3::BucketPolicy
+      DependsOn:
+        - PingPongApp
+      Properties:
+        Bucket:
+          Ref: PingPongApp
+        PolicyDocument:
+          Statement:
+            - Sid: PublicReadGetObject
+              Effect: Allow
+              Principal: '*'
+              Action:
+                - s3:GetObject
+              Resource:
+                - Fn::Join: [
+                    '', [
+                      'arn:aws:s3:::',
+                      {
+                        'Ref': 'PingPongApp'
+                      },
+                      '/*'
+                    ]
+                  ]

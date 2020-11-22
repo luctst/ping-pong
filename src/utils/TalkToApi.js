@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * Talk with the Waveup API.
  *
