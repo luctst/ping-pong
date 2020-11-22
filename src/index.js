@@ -2,8 +2,8 @@ import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-// import Header from './components/Header';
 import Home from "./views/Home";
+import AddGame from "./views/AddGame";
 import reportWebVitals from "./reportWebVitals";
 
 document.body.style = "margin:0;padding:0;background-color:#115493";
@@ -11,9 +11,9 @@ document.body.style = "margin:0;padding:0;background-color:#115493";
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      {/* <Header /> */}
       <Switch>
-        <Route exact strict to="/" component={Home} />
+        <Route exact strict sensitive path="/" component={Home} />
+        <Route exact strict sensitive path="/add" component={AddGame} />
       </Switch>
     </BrowserRouter>
   </React.StrictMode>,

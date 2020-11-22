@@ -1,0 +1,96 @@
+/*
+All the website was designed and developed by LÃ©o Parpeix.
+Feel free to contact me : lparpeix@gmail.com
+Enjoy ! 
+*/
+html, body, body div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    font-family: 'Open Sans', sans-serif;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: "";
+    content: none;
+}
+
+abbr {
+    cursor: help;
+    font-size: 90%;
+    opacity: 0.9;
+    text-decoration: none;
+}
+dfn[title],
+abbr[title]:hover,
+abbr[title]:focus {
+    border-bottom: 1px dotted;
+}
+cite {
+  color:#333;
+  font-weight:normal;
+  font-style:normal;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Hand cursor on clickable input elements */
+label, input[type="button"],
+input[type="submit"],
+input[type="image"],
+button { 
+    cursor: pointer;
+}
+
+/* Remove extra padding and inner border in Firefox */
+input::-moz-focus-inner,
+button::-moz-focus-inner {
+    border: 0; padding: 0;
+}
+
+body, select, input, textarea, a[href^="tel:"]:link {
+    color: #FFFFFF;
+    font-family: "Georgia", "Times New Roman", serif;
+    font-weight: normal;
+}
+
+::-moz-selection {
+    background: rgba(136, 187, 0, 0.15);
+    text-shadow: none;
+}
+::selection {
+    background: rgba(136, 187, 0, 0.15);
+    text-shadow: 
+    none;
+}
+
+ul{
+    list-style:none;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+}

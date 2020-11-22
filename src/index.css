@@ -13,6 +13,15 @@
   src: local('Degular-Semibold'), url(./font/Degular-Semibold.otf) format('woff');
 }
 
+.container {
+  background-color: #115493;
+  height: 95vh;
+  padding: 0 10vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .loader {
   margin: 0 0 2em;
   height: 100px;
@@ -21,4 +30,75 @@
   padding: 1em;
   display: inline-block;
   vertical-align: top;
+}
+
+.LiName {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+  border-top: 1px solid rgba(255,255,255,0.25);
+  font-size: 40px;
+}
+
+.LiNameChevron{
+    display: flex;
+}
+
+.contentChevron{
+    padding-left: 15px;
+}
+.contentChevron img{
+    transform: rotate(-180deg);
+}
+
+.contentScore {
+    display: flex;
+    flex-direction: column;
+}
+.contentScore li {
+  align-items: center;
+  display: flex;
+  padding: 10px 10px;
+  margin: 1px 0;
+  background-color: #0c3f6f;
+}
+
+#AddMatch{
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+#AddMatch img{
+  width: 75px;
+  animation: BallBounce 2s ease-out 0s infinite;
+}
+
+@keyframes BallBounce{
+  from { transform: scale(0.5) rotate(0deg); }
+  50% { transform: scale(1) rotate(180deg); }
+  to   { transform: scale(0.5) rotate(360deg); }
+}  
+
+.h1{
+    font-family: "Nichrome";
+    font-size: 40px;
+}
+.p1{
+    font-family: "Nichrome";
+    font-size: 20px;
+    margin: 0 3px;
+}
+.p1-1{
+    font-family: "Nichrome";
+    font-size: 20px;
+    margin: 0 3px;
+
+    opacity: 0.5;
+}
+.p2{
+    font-family: "Nichrome";
+    font-size: 20px;
 }
