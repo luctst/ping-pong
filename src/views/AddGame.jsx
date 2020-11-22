@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import { Redirect } from "react-router-dom";
 import Loader from "../components/Loader";
