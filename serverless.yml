@@ -16,7 +16,7 @@ provider:
   name: aws
   runtime: nodejs12.x
   region: ${self:custom.region}
-  profile: aws-perso-cli
+  # profile: aws-perso-cli
 
 package:
   exclude:
