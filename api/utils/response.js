@@ -12,7 +12,9 @@ module.exports = (response, code, data = {}) => {
   let error;
   const defaultHeader = {
     "Access-Control-Allow-Origin":
-      process.env.NODE_ENV === "development" ? "http://localhost:3000" : "",
+      process.env.NODE_ENV === "development"
+        ? process.env.REACT_APP_APIURL_DEV
+        : process.env.REACT_APP_APIURL_PROD,
     "Access-Control-Allow-Credentials": true,
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
     "Access-Control-Allow-Headers":

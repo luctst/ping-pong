@@ -10,7 +10,9 @@ const playersRouter = require("./routes/players");
 app.use(
   cors({
     origin:
-      process.env.NODE_ENV === "development" ? "http://localhost:3000" : "",
+      process.env.NODE_ENV === "development"
+        ? process.env.REACT_APP_APIURL_DEV
+        : process.env.REACT_APP_APIURL_PROD,
     credentials: true,
   })
 );
