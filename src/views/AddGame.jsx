@@ -2,8 +2,11 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import Loader from "../components/Loader";
 import talkToApi from "../utils/TalkToApi";
+import "../addGame.css";
 
 export default function AddGame(props) {
+  const score1 = React.useRef(null);
+  const score2 = React.useRef(null);
   const [state, setState] = React.useState({
     player1: "",
     player2: "",
@@ -52,7 +55,7 @@ export default function AddGame(props) {
 
     const body = {
       players: {},
-      score: state.score,
+      score: `${score1.current.value}-${score2.current.value}`,
     };
 
     props.location.state.forEach(function (player) {
@@ -84,35 +87,76 @@ export default function AddGame(props) {
   if (state.submitApi) return <Loader />;
 
   return (
-    <form className="container" onSubmit={submitGame}>
-      <section className="row">
-        {state.errorMessage.length > 0 && (
-          <small className="text-danger">{state.errorMessage}</small>
-        )}
-        <div className="col-12 form-group">
-          <label>Player 1</label>
-          <select className="form-control" id="player1" onChange={populateData}>
-            {props.location.state.map(function (i, y) {
-              return <option key={y}>{i.name}</option>;
-            })}
-          </select>
+    <>
+      <section className="container-fluid">
+        <div className="row">
+          <div className="col-12">
+            <h4 className="text-center">Ajouter un match</h4>
+          </div>
         </div>
-        <div className="col-12 form-group">
-          <label>Player 1</label>
-          <select className="form-control" id="player2" onChange={populateData}>
-            {props.location.state.map(function (i, y) {
-              return <option key={y}>{i.name}</option>;
-            })}
-          </select>
-        </div>
-        <div className="col-12 form-group">
-          <label>Score - sous ce format 'player1Score-player2Score'</label>
-          <input type="text" className="form-control" onChange={populateData} />
-        </div>
-        <button className="btn btn-success" type="submit">
-          Valider
-        </button>
       </section>
-    </form>
+      <form className="container mt-4" onSubmit={submitGame}>
+        <section className="row">
+          {state.errorMessage.length > 0 && (
+            <small className="text-danger">{state.errorMessage}</small>
+          )}
+          <div className="col-12 form-group">
+            <label className="p1">Player 1</label>
+            <select
+              className="form-control"
+              id="player1"
+              onChange={populateData}
+            >
+              {props.location.state.map(function (i, y) {
+                return (
+                  <option key={y} className="p1">
+                    {i.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <div className="col-12 form-group">
+            <label className="p1">Player 1</label>
+            <select
+              className="form-control"
+              id="player2"
+              onChange={populateData}
+            >
+              {props.location.state.map(function (i, y) {
+                return (
+                  <option key={y} className="p1">
+                    {i.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <div className="col-12 form-group input_score">
+            <input
+              type="number"
+              id="score_joueur1"
+              name="Score Joueur 1"
+              placeholder="Score J1"
+              min="0"
+              max="100"
+              ref={score1}
+            />
+            <input
+              type="number"
+              id="score_joueur2"
+              name="Score Joueur 2"
+              placeholder="Score J2"
+              min="0"
+              max="100"
+              ref={score2}
+            />
+          </div>
+          <button className="btn btn-success btn_send" type="submit">
+            Valider
+          </button>
+        </section>
+      </form>
+    </>
   );
 }

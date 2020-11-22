@@ -11,8 +11,8 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "development"
-        ? process.env.REACT_APP_APIURL_DEV
-        : process.env.REACT_APP_APIURL_PROD,
+        ? process.env.CORS_ORIGIN_DEV
+        : process.env.CORS_ORIGIN_PROD,
     credentials: true,
   })
 );
