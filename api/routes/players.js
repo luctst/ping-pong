@@ -17,16 +17,18 @@ router.get("/", async function (req, res) {
     p.series.map(function (l) {
       l.games.map(function (t) {
         // If my id is in this game
-        if (t.players.winner._id.toString() === p._id.toString() || t.players.looser._id.toString() === p._id.toString()) {
+        if (
+          t.players.winner._id.toString() === p._id.toString() ||
+          t.players.looser._id.toString() === p._id.toString()
+        ) {
           // If i lost against someone
           if (t.players.looser._id.toString() === p._id.toString()) {
             // If in score the score is already declared
             if (dataToReturn.scores[t.players.winner.name]) {
-              return (
-                dataToReturn.scores[t.players.winner.name].loose = dataToReturn.scores[t.players.winner.name].loose + 1
-              );
+              return (dataToReturn.scores[t.players.winner.name].loose =
+                dataToReturn.scores[t.players.winner.name].loose + 1);
             }
-  
+
             return (dataToReturn.scores[t.players.winner.name] = {
               win: 0,
               loose: 1,
@@ -37,7 +39,7 @@ router.get("/", async function (req, res) {
             return (dataToReturn.scores[t.players.looser.name].win =
               dataToReturn.scores[t.players.looser.name].win + 1);
           }
-  
+
           return (dataToReturn.scores[t.players.looser.name] = {
             win: 1,
             loose: 0,

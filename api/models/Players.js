@@ -29,7 +29,7 @@ const PlayersSchema = new mongoose.Schema(
     },
   },
   { timestamps: false, versionKey: false }
-)
+);
 
 const Players = mongoose.model("Players", PlayersSchema);
 

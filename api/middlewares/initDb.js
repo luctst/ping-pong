@@ -10,7 +10,7 @@ module.exports = function (ops) {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
-        useFindAndModify: false
+        useFindAndModify: false,
       });
       next();
     } catch (error) {
