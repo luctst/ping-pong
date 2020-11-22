@@ -11,9 +11,9 @@ module.exports = async function (data) {
       "games date"
     ).exec();
 
-    if (!session) {
-      delete data.session;
+    delete data.session;
 
+    if (!session) {
       const newSession = new SeriesModel({
         games: [{ ...data }],
       });

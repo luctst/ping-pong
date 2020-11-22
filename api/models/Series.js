@@ -39,6 +39,13 @@ SeriesSchema.pre("find", function () {
 });
 
 SeriesSchema.post('save', async function (doc) {
+  const reset = {
+    gamesPlayed: 0,
+    win: 0,
+    series: []
+  };
+
+  await playersModel.updateMany({}, { ...reset });
   const players = await playersModel.find({});
 
   await Promise.all(players.map(async function (player) {
@@ -73,46 +80,5 @@ SeriesSchema.post('save', async function (doc) {
 })
 
 const Series = mongoose.model("Series", SeriesSchema);
-
-Series.watch().on("change", async function (newData) {
-  if (newData.operationType === "update") {
-    const fieldUpdate = Object.keys(newData.updateDescription.updatedFields)[0];
-    const playersSession = await playersModel
-      .where("_id")
-      .in([
-        mongoose.Types.ObjectId(
-          newData.updateDescription.updatedFields[fieldUpdate].players.winner
-        ),
-        mongoose.Types.ObjectId(
-          newData.updateDescription.updatedFields[fieldUpdate].players.looser
-        ),
-      ]);
-
-    await Promise.all(
-      playersSession.map(async (p) => {
-        const fieldsToUpdate = {
-          gamesPlayed: p.gamesPlayed + 1,
-        };
-
-        if (!p.series.includes(newData.documentKey._id)) {
-          fieldsToUpdate.$push = { series: newData.documentKey._id };
-        }
-
-        if (
-          newData.updateDescription.updatedFields[
-            fieldUpdate
-          ].players.winner.toString() === p._id.toString()
-        ) {
-          fieldsToUpdate.win = p.win + 1;
-        }
-
-        await playersModel.updateOne(
-          { _id: mongoose.Types.ObjectId(p._id) },
-          { ...fieldsToUpdate }
-        );
-      })
-    );
-  }
-});
 
 module.exports = Series;
