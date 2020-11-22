@@ -6,7 +6,7 @@ plugins:
   - serverless-certificate-creator
 
 custom:
-  region: ${opt:region, 'eu-east-1'}
+  region: ${opt:region, 'eu-west-1'}
   bucketName: pingpong
   s3Sync:
     - bucketName: ${self:custom.bucketName}
