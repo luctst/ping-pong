@@ -2,21 +2,21 @@ service: pingpong-front
 
 plugins:
   - serverless-s3-remover
-  - serverless-s3-sync
+  # - serverless-s3-sync
   - serverless-certificate-creator
 
 custom:
   region: ${opt:region, 'eu-west-1'}
   bucketName: pingpong
-  s3Sync:
-    - bucketName: ${self:custom.bucketName}
-      localDir: build
+  # s3Sync:
+  #   - bucketName: ${self:custom.bucketName}
+  #     localDir: build
 
 provider:
   name: aws
   runtime: nodejs12.x
   region: ${self:custom.region}
-  # profile: aws-perso-cli
+  profile: aws-perso-cli
 
 package:
   exclude:
