@@ -3,7 +3,7 @@ service: pingpong-front
 plugins:
   - serverless-s3-remover
   # - serverless-s3-sync
-  - serverless-certificate-creator
+  # - serverless-certificate-creator
 
 custom:
   region: ${opt:region, 'eu-west-1'}
