@@ -14,7 +14,7 @@ app.use(
         ? process.env.CORS_ORIGIN_DEV
         : process.env.CORS_ORIGIN_PROD,
     credentials: true,
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     allowedHeaders: 'Content-Type, Authorization, X-api-key'
   })
 );
