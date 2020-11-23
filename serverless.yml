@@ -20,7 +20,7 @@ provider:
   name: aws
   runtime: nodejs12.x
   region: ${self:custom.region}
-  # profile: aws-perso-cli
+  profile: aws-perso-test
 
 package:
   exclude:
@@ -49,6 +49,7 @@ ressources:
       Type: AWS::S3::BucketPolicy
       DependsOn:
         - PingPongApp
+        - CloudFrontOriginAccessIdentity
       Properties:
         Bucket:
           Ref: PingPongApp
@@ -69,3 +70,54 @@ ressources:
                       '/*'
                     ]
                   ]
+    CloudFrontOriginAccessIdentity:
+      Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+      Properties:
+        CloudFrontOriginAccessIdentityConfig:
+          Comment: "pingpingpong CloudFrontOrigin"
+    CloudFrontDistribution:
+      Type: 'AWS::CloudFront::Distribution'
+      DependsOn:
+        - PingPongApp
+        - CloudFrontOriginAccessIdentity
+      Properties:
+        DistributionConfig:
+          Origins:
+            - DomainName: ${self:custom.bucketName}.s3.amazonaws.com
+              OriginPath: ''
+              Id: S3BucketOrigin
+              S3OriginConfig:
+                OriginAccessIdentity:
+                  Fn::Join:
+                    - ''
+                    - 
+                      - 'origin-access-identity/cloudfront/'
+                      - Ref: CloudFrontOriginAccessIdentity
+          Comment: 'CloudFront origin for ${self:custom.bucketName}'
+          CustomErrorResponses:
+            - ErrorCode: 404
+              ResponseCode: 200
+              ErrorCachingMinTTL: 0
+              ResponsePagePath: /index.html
+            - ErrorCode: 403
+              ResponseCode: 200
+              ErrorCachingMinTTL: 0
+              ResponsePagePath: /index.html
+          DefaultCacheBehavior:
+            AllowedMethods:
+              - GET
+              - HEAD
+              - OPTIONS
+            TargetOriginId: S3BucketOrigin
+            Compress: true
+            ForwardedValues:
+              QueryString: 'false'
+              Cookies:
+                Forward: none
+            ViewerProtocolPolicy: redirect-to-https
+          DefaultRootObject: index.html
+          Enabled: 'true'
+          HttpVersion: 'http2'
+          PriceClass: 'PriceClass_100'
+          ViewerCertificate:
+              CloudFrontDefaultCertificate: true
