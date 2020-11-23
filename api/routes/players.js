@@ -17,7 +17,6 @@ router.get("/", async function (req, res) {
     p.series.map(function (l) {
       l.games.map(function (t) {
         // If my id is in this game
-        console.log(t);
         if (
           t.players.winner._id.toString() === p._id.toString() ||
           t.players.looser._id.toString() === p._id.toString()

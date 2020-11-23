@@ -33,6 +33,7 @@ module.exports = async function (data) {
       modifyResponse: session._doc,
     };
   } catch (error) {
+    console.log(error.message);
     return {
       code: 500,
     };

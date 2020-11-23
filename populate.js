@@ -46,7 +46,7 @@ async function add () {
             const playersId = players.map(player => player.id);
             const games = [];
 
-            for (let index = 1; index <= 3; index++) {
+            for (let index = 1; index <= 1; index++) {
                 const playersIdCopy = [...playersId];
                 const winner = playersIdCopy[Math.floor(Math.random() * playersIdCopy.length)];
 
@@ -83,14 +83,15 @@ async function populateName() {
         return await Promise.all(players.map(async function (player) {
             const fieldsToupdate = {
                 win: player.win,
-                gamesPlayed: player.gamesPlayed
+                gamesPlayed: player.gamesPlayed,
+                series: [ ...player.series]
             };
             
             series.forEach(function (serie) {
                 serie.games.forEach(function (game) {
                     if (game.players.winner._id.toString() === player._id.toString()) {
-                        if (!player.series.includes(serie._id)) {
-                            fieldsToupdate.$push = {series: serie._id}
+                        if (!fieldsToupdate.series.includes(serie._id)) {
+                            fieldsToupdate.series.push(serie._id)
                         }
 
                         fieldsToupdate.win = fieldsToupdate.win + 1;
@@ -99,8 +100,8 @@ async function populateName() {
                     }
 
                     if (game.players.looser._id.toString() === player._id.toString()) {
-                        if (!player.series.includes(serie._id)) {
-                            fieldsToupdate.$push = { series: serie._id }
+                        if (!fieldsToupdate.series.includes(serie._id)) {
+                            fieldsToupdate.series.push(serie._id);
                         }
 
                         fieldsToupdate.gamesPlayed = fieldsToupdate.gamesPlayed + 1;
@@ -131,13 +132,9 @@ async function deleteData() {
         {
             name: 'collections',
             type: 'list',
-            choices: ['players', 'series', 'all']
+            choices: ['series']
         }
     ]);
-
-    if (aswr.collections === 'players' || aswr.collections === 'all') {
-        await PlayersModel.deleteMany({});
-    }
 
     if (aswr.collections === 'series' || aswr.collections === 'all') {
         await SeriesModel.deleteMany({});

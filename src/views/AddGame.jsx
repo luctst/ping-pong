@@ -6,6 +6,8 @@ import talkToApi from "../utils/TalkToApi";
 import "../addGame.css";
 
 export default function AddGame(props) {
+  const player1 = React.useRef(null);
+  const player2 = React.useRef(null);
   const score1 = React.useRef(null);
   const score2 = React.useRef(null);
   const [state, setState] = React.useState({
@@ -21,30 +23,37 @@ export default function AddGame(props) {
     if (props.location.state) {
       return setState({
         ...state,
-        player1: props.location.state[0].name,
+        player1: player1.current.value,
+        player2: player2.current.value,
+        score: `${score1.current.value}-${score2.current.value}`,
+        btnDisabled: true
       });
     }
   }, []);
 
   function populateData(e) {
-    if (e.target.id === "player1") {
-      return setState({
-        ...state,
-        player1: e.target.value,
-      });
+    const newState = {...state};
+
+    if (
+      player1.current.value.length !== 0 &&
+      player2.current.value.length !== 0 &&
+      score1.current.value.length !== 0 &&
+      score2.current.value.length !== 0
+    ) {
+      newState.btnDisabled = false
+    } else {
+      newState.btnDisabled = true;
     }
 
-    if (e.target.id === "player2") {
-      return setState({
-        ...state,
-        player2: e.target.value,
-      });
+    if (e.target.id === "player1" || e.target.id === 'player2') {
+      newState[e.target.id] = e.target.value;
+      return setState(newState);
     }
 
-    setState({
-      ...state,
-      score: e.target.value,
-    });
+    if (e.target.id === 'score_joueur1' || e.target.id === 'score_joueur2') {
+      newState.score = `${score1.current.value}-${score2.current.value}`;
+      return setState(newState);
+    }
   }
 
   async function submitGame(e) {
@@ -56,7 +65,7 @@ export default function AddGame(props) {
 
     const body = {
       players: {},
-      score: `${score1.current.value}-${score2.current.value}`,
+      score: state.score,
     };
 
     props.location.state.forEach(function (player) {
@@ -107,6 +116,7 @@ export default function AddGame(props) {
               className="form-control"
               id="player1"
               onChange={populateData}
+              ref={player1}
             >
               {props.location.state.map(function (i, y) {
                 return (
@@ -118,11 +128,12 @@ export default function AddGame(props) {
             </select>
           </div>
           <div className="col-12 form-group">
-            <label className="p1">Player 1</label>
+            <label className="p1">Player 2</label>
             <select
               className="form-control"
               id="player2"
               onChange={populateData}
+              ref={player2}
             >
               {props.location.state.map(function (i, y) {
                 return (
@@ -142,6 +153,7 @@ export default function AddGame(props) {
               min="0"
               max="100"
               ref={score1}
+              onChange={populateData}
             />
             <input
               type="number"
@@ -151,9 +163,10 @@ export default function AddGame(props) {
               min="0"
               max="100"
               ref={score2}
+              onChange={populateData}
             />
           </div>
-          <button className="btn btn-success btn_send" type="submit">
+          <button className="btn btn-success btn_send" type="submit" disabled={state.btnDisabled}>
             Valider
           </button>
         </section>
