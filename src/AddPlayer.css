@@ -1,0 +1,13 @@
+.btn_send{
+    background-color : yellow;
+    color: black;
+    border: none;
+    font-family: "Nichrome";
+    font-size: 20px;
+    margin: 8px 0 24px 0;
+    height: 40px;
+    width: 100%;
+    border-radius: 4px;
+    padding: 14px 20px;
+    height: auto;
+}

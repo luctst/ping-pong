@@ -5,8 +5,9 @@ const SeriesSchema = new mongoose.Schema(
   {
     date: {
       type: String,
-      default: `${new Date().getDate()}/${new Date().getMonth() + 1
-        }/${new Date().getFullYear()}`,
+      default: `${new Date().getDate()}/${
+        new Date().getMonth() + 1
+      }/${new Date().getFullYear()}`,
       index: true,
     },
     games: {
@@ -40,19 +41,20 @@ SeriesSchema.pre("find", function () {
 
 SeriesSchema.post("save", async function (doc) {
   const game = doc.games[doc.games.length - 1];
-  const players = await playersModel.find({})
-  .where('_id')
-  .in([
-    mongoose.Types.ObjectId(game.players.winner._id),
-    mongoose.Types.ObjectId(game.players.looser._id)
-  ]);
+  const players = await playersModel
+    .find({})
+    .where("_id")
+    .in([
+      mongoose.Types.ObjectId(game.players.winner._id),
+      mongoose.Types.ObjectId(game.players.looser._id),
+    ]);
 
   await Promise.all(
     players.map(async function (player) {
       const fieldsToupdate = {
         win: player.win,
         gamesPlayed: player.gamesPlayed,
-        series: [...player.series]
+        series: [...player.series],
       };
 
       if (!player.series.includes(doc._id)) {
@@ -67,7 +69,7 @@ SeriesSchema.post("save", async function (doc) {
       if (game.players.looser._id.toString() === player._id.toString()) {
         fieldsToupdate.gamesPlayed = fieldsToupdate.gamesPlayed + 1;
       }
-      
+
       return await playersModel.findByIdAndUpdate(player._id, {
         ...fieldsToupdate,
       });

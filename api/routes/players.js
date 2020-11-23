@@ -4,6 +4,7 @@ const router = express.Router();
 const response = require("../utils/response");
 const addGameController = require("../controller/addGame");
 const getPlayersData = require("../controller/getPlayersDatas");
+const addPlayerController = require("../controller/addPlayerController");
 
 router.get("/", async function (req, res) {
   const responseController = await getPlayersData();
@@ -96,5 +97,35 @@ router.post("/add", async function (req, res) {
       : undefined,
   });
 });
+
+router.post('/add/player',  async function (req, res) {
+  const b = Object.keys(req.body);
+
+  if (!b.length) {
+    return response(res, 422);
+  }
+
+  if (!b.length > 1) {
+    return response(res, 422);
+  }
+
+  if (!b.includes('playerName')) {
+    return response(res, 422);
+  }
+
+  const responseController = await addPlayerController({ ...req.body });
+
+  return response(res, responseController.code, {
+    serverHeader: responseController.serverHeader
+      ? { ...responseController.serverHeader }
+      : undefined,
+    content: responseController.content
+      ? responseController.content
+      : undefined,
+    modifyResponse: responseController.modifyResponse
+      ? { ...responseController.modifyResponse }
+      : undefined,
+  });
+})
 
 module.exports = router;

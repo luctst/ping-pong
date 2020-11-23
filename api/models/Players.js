@@ -6,7 +6,6 @@ const PlayersSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      enum: ["antoine", "thomas", "léo", "lucas", "mathilde"],
     },
     gamesPlayed: {
       type: Number,

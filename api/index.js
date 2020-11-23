@@ -14,11 +14,11 @@ app.use(
     //   process.env.NODE_ENV === "development"
     //     ? process.env.CORS_ORIGIN_DEV
     //     : process.env.CORS_ORIGIN_PROD,
-    origin: '*',
+    origin: "*",
     credentials: true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-    allowedHeaders: 'Content-Type, Authorization, X-api-key',
-    preflightContinue: false
+    allowedHeaders: "Content-Type, Authorization, X-api-key",
+    preflightContinue: false,
   })
 );
 // app.options('*', function (req, res) {

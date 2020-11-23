@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Home from "./views/Home";
 import AddGame from "./views/AddGame";
+import AddPlayer from './views/AddPlayer';
 import reportWebVitals from "./reportWebVitals";
 
 document.body.style = "margin:0;padding:0;background-color:#115493";
@@ -14,6 +15,7 @@ ReactDOM.render(
       <Switch>
         <Route exact strict sensitive path="/" component={Home} />
         <Route exact strict sensitive path="/add" component={AddGame} />
+        <Route exact strict sensitive path="/add/player" component={AddPlayer}/>
       </Switch>
     </BrowserRouter>
   </React.StrictMode>,

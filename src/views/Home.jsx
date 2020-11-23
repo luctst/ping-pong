@@ -64,18 +64,18 @@ export default function Home() {
                         <span
                           className={
                             playerData.scores[player].loose >
-                            playerData.scores[player].win
+                              playerData.scores[player].win
                               ? "text-danger"
                               : ""
                           }
                         >
                           {playerData.scores[player].loose}
                         </span>
-                        /
+                          /
                         <span
                           className={
                             playerData.scores[player].loose <
-                            playerData.scores[player].win
+                              playerData.scores[player].win
                               ? "text-success p1-1"
                               : ""
                           }
