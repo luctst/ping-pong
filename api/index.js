@@ -10,10 +10,11 @@ const response = require("./utils/response");
 
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === "development"
-        ? process.env.CORS_ORIGIN_DEV
-        : process.env.CORS_ORIGIN_PROD,
+    // origin:
+    //   process.env.NODE_ENV === "development"
+    //     ? process.env.CORS_ORIGIN_DEV
+    //     : process.env.CORS_ORIGIN_PROD,
+    origin: '*',
     credentials: true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     allowedHeaders: 'Content-Type, Authorization, X-api-key',
