@@ -54,7 +54,7 @@ export default function (route, method, data = {}) {
             : process.env.REACT_APP_APIURL_PROD
         }${route}`,
     {
-      credentials: "include",
+      credentials: "omit",
       method: method,
       headers: { ...headers },
       body: data.body && JSON.stringify(data.body),
