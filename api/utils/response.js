@@ -11,14 +11,14 @@
 module.exports = (response, code, data = {}) => {
   let error;
   const defaultHeader = {
-    "Access-Control-Allow-Origin":
-      process.env.NODE_ENV === "development"
-        ? process.env.CORS_ORIGIN_DEV
-        : process.env.CORS_ORIGIN_PROD,
-    "Access-Control-Allow-Credentials": true,
-    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-    "Access-Control-Allow-Headers":
-      "Authorization ,ETag, Link, Location, Retry-After, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, x-api-key, Content-Type",
+    // "Access-Control-Allow-Origin":
+    //   process.env.NODE_ENV === "development"
+    //     ? process.env.CORS_ORIGIN_DEV
+    //     : process.env.CORS_ORIGIN_PROD,
+    // "Access-Control-Allow-Credentials": true,
+    // "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    // "Access-Control-Allow-Headers":
+    //   "Authorization ,ETag, Link, Location, Retry-After, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, x-api-key, Content-Type",
     "Cache-Control": "max-age=0, s-maxage=86400",
     "content-type": "application/json; charset=utf-8",
     "Content-Security-Policy": "default-src 'none'",
