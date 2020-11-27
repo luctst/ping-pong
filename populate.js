@@ -16,7 +16,7 @@ async function add () {
         {
             name: 'useMockData',
             type: 'confirm',
-            message: 'Would you like to inject real or fake datas ?',
+            message: 'Would you like to inject some datas ?',
             when: function (a) {
                 if (a.collection === 'series') return true;
                 return false;
@@ -68,11 +68,68 @@ async function add () {
                 return await SeriesModel.findByIdAndUpdate(serie._id, {games: [ ...serie.games, ...games]})
             }
 
-            return await new SeriesModel({ games: [...games] }).save();
+            return await new SeriesModel({ games: aswr.useMockData ? await populateRealSeries() :  [...games] }).save();
         }
 
         return process.stderr.write('You must add some players before');
     }
+}
+
+async function populateRealSeries () {
+    const PlayersList = await PlayersModel.find({});
+    const playerName = PlayersList.map(player => player.name);
+    const promptData = [];
+    const games = {};
+    const newSerie = {
+        date: '15/11/2020',
+        games: []
+    };
+
+    playerName.forEach(function (namePlayer) {
+        PlayersList.forEach(function (player) {
+            if (namePlayer === player.name) return false;
+
+            return promptData.push({
+                type: 'number',
+                name: `${namePlayer}-${player.name}`,
+                message: `${namePlayer} how many games you win against ${player.name} ?`,
+                default: 0,
+                validate (userAswr) {
+                    if (games[namePlayer]) {
+                        games[namePlayer][player.name] = userAswr;
+                        return true;
+                    }
+
+                    games[namePlayer] = {}; 
+                    games[namePlayer][player.name] = userAswr;
+                    return true;
+                }
+            });
+        });
+    });
+
+    await prompt(promptData);
+
+    Object.keys(games).forEach(function (player) {
+        const playerId = PlayersList.find(p => p.name === player).id;
+
+        Object.keys(games[player]).forEach(function (opponents) {
+            if (games[player][opponents] <= 0) return;
+            const opponentId = PlayersList.find(p => p.name === opponents);
+
+            for (let index = 0; index <= games[player][opponents]; index++) {
+                newSerie.games.push({
+                    players: {
+                        winner: playerId,
+                        looser: opponentId
+                    },
+                    score: "-"
+                });
+            }
+        });
+    });
+
+    await new SeriesModel({ ...newSerie}).save();
 }
 
 async function populateName() {
@@ -167,6 +224,8 @@ async function main () {
                 return await deleteData();
             case 'depopulate':
                 return await dePopulate();
+            case 't':
+                return await populateRealSeries();
             default:
                 break;
         }
