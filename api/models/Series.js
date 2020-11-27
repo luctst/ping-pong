@@ -34,6 +34,11 @@ const SeriesSchema = new mongoose.Schema(
   { timestamps: false, versionKey: false }
 );
 
+SeriesSchema.pre('findOne', function () {
+  this.populate("games.players.winner", "name");
+  this.populate("games.players.looser", "name");
+})
+
 SeriesSchema.pre("find", function () {
   this.populate("games.players.winner", "name");
   this.populate("games.players.looser", "name");
